@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<project default="javadoc">
+    <target name="javadoc">
+        <javadoc access="public" additionalparam=" -encoding utf-8 -charset utf-8" author="true" classpath="." destdir="../../plterlib/doc" doctitle="plter-android-lib-doc" nodeprecated="false" nodeprecatedlist="false" noindex="false" nonavbar="false" notree="false" packagenames="com.plter.lib.java.utils,com.plter.lib.android.game2d.java.tween,com.plter.lib.android.game2d.java.errors,com.plter.lib.java.lang,com.plter.lib.android.java.json,com.plter.lib.java.android.net.jsonrpc,com.plter.lib.android.game2d.java.display,com.plter.lib.android.java.controls,com.plter.lib.java.geom,com.plter.lib.android.java.anim,com.plter.lib.java.json,com.plter.lib.java.events,com.plter.lib.android.game2d.java.events" source="1.6" sourcepath="../plterlib-android-game2d:../plterlib-json:../plterlib-android-ext:../gen:../plterlib-android-jsonrpc:../plterlib-common" splitindex="true" use="true" version="true"/>
+    </target>
+</project>

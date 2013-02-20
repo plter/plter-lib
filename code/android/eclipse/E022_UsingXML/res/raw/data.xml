@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<data num="4">
+    <people name="Mr Zhang" age="20" sex="male"/>
+    <people name="Mr Wang" age="23" sex="male"></people>
+    <people name="Xiaoli" age="21" sex="female"></people>
+    
+    <other>这个嘛是文本内容啦</other>
+</data>

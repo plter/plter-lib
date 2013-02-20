@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="hello">Hello World, E004_UsingViewControllerActivity!</string>
+    <string name="app_name">E004_UsingViewController</string>
+
+</resources>
