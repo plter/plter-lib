@@ -80,7 +80,7 @@ public class ObjectPool {
 				tmpArr.add(obj);
 			}
 		}else{
-			tmpArr=Collections.synchronizedList(new ArrayList<>());
+			tmpArr=Collections.synchronizedList(new ArrayList<Object>());
 			tmpArr.add(obj);
 			classMap.put(obj.getClass(), tmpArr);
 		}

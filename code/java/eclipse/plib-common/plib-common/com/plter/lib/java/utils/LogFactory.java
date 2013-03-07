@@ -37,7 +37,7 @@ public abstract class LogFactory {
 				
 				@Override
 				public String format(LogRecord record) {
-					return String.format("%d[%s]%s from[%s.%s]\n", record.getMillis()-START_TIME,record.getLevel(),record.getMessage(),record.getSourceClassName(),record.getSourceMethodName());
+					return String.format("%d[%s]%s[%s.%s]\n", record.getMillis()-START_TIME,record.getLevel(),record.getMessage(),record.getSourceClassName(),record.getSourceMethodName());
 				}
 			});
 			ch.setLevel(Level.ALL);
