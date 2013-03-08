@@ -35,9 +35,8 @@ public class ObjectPool {
 
 	private static final Logger log = LogFactory.getLogger();
 
-
-	private static final Map<Class<?>, List<Object>> classMap=new ConcurrentHashMap<Class<?>,List<Object>>();
-	private static List<Object> tmpArr=null;
+	private static final Map<Class<?>, List<PObject>> classMap=new ConcurrentHashMap<Class<?>,List<PObject>>();
+	private static List<PObject> tmpArr=null;
 
 
 	/**
@@ -67,12 +66,25 @@ public class ObjectPool {
 		return null;
 	}
 
+	/**
+	 * 判断某个对象是否在回收池中
+	 * @param object
+	 * @return
+	 */
+	public static final boolean contains(PObject object){
+		List<PObject> objs = classMap.get(object.getClass());
+		if (objs!=null) {
+			return objs.contains(object);
+		}
+		return false;
+	}
+	
 
 	/**
 	 * 回收一个对象
 	 * @param obj
 	 */
-	public final synchronized static void recycle(Object obj){
+	public final synchronized static void recycle(PObject obj){
 		tmpArr=classMap.get(obj.getClass());
 
 		if (tmpArr!=null) {
@@ -80,7 +92,7 @@ public class ObjectPool {
 				tmpArr.add(obj);
 			}
 		}else{
-			tmpArr=Collections.synchronizedList(new ArrayList<Object>());
+			tmpArr=Collections.synchronizedList(new ArrayList<PObject>());
 			tmpArr.add(obj);
 			classMap.put(obj.getClass(), tmpArr);
 		}

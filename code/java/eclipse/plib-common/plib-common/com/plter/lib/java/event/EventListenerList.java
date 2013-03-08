@@ -22,7 +22,6 @@
 package com.plter.lib.java.event;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 public class EventListenerList<E extends Event> {
@@ -43,9 +42,8 @@ public class EventListenerList<E extends Event> {
 		
 		boolean suc = true;
 		
-		Iterator<EventListener<E>> it = eList.iterator();
-		while(it.hasNext()){
-			if (!it.next().onReceive(target, event)) {
+		for (int i = 0; i < eList.size(); i++) {
+			if (!eList.get(i).onReceive(target, event)) {
 				suc=false;
 			}
 			
@@ -55,6 +53,7 @@ public class EventListenerList<E extends Event> {
 			}
 		}
 		
+		event.recycle();
 		return suc;
 	}
 	

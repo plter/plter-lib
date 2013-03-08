@@ -21,15 +21,18 @@
 
 package com.plter.lib.java.event;
 
-public class Event {
-	
-	public Event(String type) {
-		setType(type);
-	}
 
-	public Event(String type,Object data) {
+public class Event extends com.plter.lib.java.lang.PObject{
+
+	public Event init(String type,Object data) {
 		setType(type);
 		setData(data);
+		return this;
+	}
+	
+	public Event init(String type){
+		setType(type);
+		return this;
 	}
 	
 	
@@ -57,6 +60,10 @@ public class Event {
 	public void stop(){
 		stoped=true;
 	}
+	
+	public Event clone(){
+		return alloc(Event.class).init(getType(), getData());
+	}
 
 
 	public boolean isStoped() {
@@ -69,7 +76,13 @@ public class Event {
 	void reset() {
 		stoped=false;
 	}
-
+	
+	@Override
+	public void recycle() {
+		setType(null);
+		setData(null);
+		super.recycle();
+	}
 
 	private String type=null;
 	private Object data=null;
