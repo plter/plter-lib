@@ -23,7 +23,9 @@ package com.plter.lib.java.xml;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.StringReader;
+import java.nio.charset.Charset;
 
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -39,7 +41,7 @@ import org.xml.sax.SAXException;
  * XML解析工具
  * @author xtiqin
  */
-public abstract class XMLRoot extends XML{
+public class XMLRoot extends XML{
 
 	/**
 	 * 解析一个xml文件
@@ -73,14 +75,27 @@ public abstract class XMLRoot extends XML{
 	}
 	
 	/**
+	 * 解析输入流
+	 * @param is
+	 * @return
+	 */
+	public static XMLRoot parse(InputStream is,String enc){
+		try {
+			return new XMLRoot(is,enc);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	/**
 	 * 解析输入源
 	 * @param is
 	 * @return
 	 */
 	public static XMLRoot parse(InputStream is){
 		try {
-			return new XMLRoot(is) {
-			};
+			return new XMLRoot(is);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -113,8 +128,14 @@ public abstract class XMLRoot extends XML{
 	private XMLRoot(InputStream is) throws SAXException, IOException, ParserConfigurationException{
 		super(DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(is));
 	}
+	private XMLRoot(InputStream is,String enc) throws SAXException, IOException, ParserConfigurationException{
+		this(new InputSource(new InputStreamReader(is, enc)));
+	}
+	private XMLRoot(InputStream is,Charset enc) throws SAXException, IOException, ParserConfigurationException{
+		this(new InputSource(new InputStreamReader(is, enc)));
+	}
 	private XMLRoot(String xml) throws SAXException, IOException, ParserConfigurationException{
-		super(DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(new InputSource(new StringReader(xml))));
+		this(new InputSource(new StringReader(xml)));
 	}
 	//<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
@@ -154,8 +175,6 @@ public abstract class XMLRoot extends XML{
 	public Element getElementById(String elementId){
 		return getDocument().getElementById(elementId);
 	}
-	
-	
 	
 	public Node getNode() {
 		return ((Document) super.getNode()).getDocumentElement();

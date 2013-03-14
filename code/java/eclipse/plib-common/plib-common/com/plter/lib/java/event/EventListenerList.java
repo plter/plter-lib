@@ -38,6 +38,10 @@ public class EventListenerList<E extends Event> {
 		eList.remove(listener);
 	}
 	
+	public void remove(){
+		eList.clear();
+	}
+	
 	public boolean dispatch(Object target,E event){
 		
 		boolean suc = true;
