@@ -2,32 +2,8 @@ package com.plter.lib.java.db;
 
 import com.plter.lib.java.db.callbacks.DbQueryCallback;
 import com.plter.lib.java.db.callbacks.DbUpdateCallback;
-import com.plter.lib.java.db.dbs.BaeMysql;
-import com.plter.lib.java.db.dbs.Mysql;
 
 public abstract class Db {
-	
-	
-	//static functions >>>>>>>>>>>>>>>>>>>>>>>>
-	private static Mysql __mysql=null;
-	public static Mysql mysql() {
-		if (__mysql==null) {
-			__mysql=new Mysql();
-		}
-		return __mysql;
-	}
-	
-	private static BaeMysql __baeMysql=null;
-	public static BaeMysql baeMysql() {
-		if (__baeMysql==null) {
-			__baeMysql=new BaeMysql();
-		}
-		return __baeMysql;
-	}
-	
-	//<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-	
-	
 	
 	public abstract Exception getCurrentException();
 	

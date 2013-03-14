@@ -10,6 +10,16 @@ import com.plter.lib.java.db.callbacks.DbQueryCallback;
 import com.plter.lib.java.db.callbacks.DbUpdateCallback;
 
 public class Mysql extends Db {
+	
+	
+	private static Mysql __mysql=null;
+	public static Mysql mysql() {
+		if (__mysql==null) {
+			__mysql=new Mysql();
+		}
+		return __mysql;
+	}
+	
 
 	public Mysql connect(String server,String dbName,String dbUser,String dbPw) {
 		this.server=server;
