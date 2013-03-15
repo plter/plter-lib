@@ -1,4 +1,4 @@
-package com.plter.lib.java.db.callbacks;
+package com.plter.lib.java.db;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;

@@ -1,7 +1,5 @@
 package com.plter.lib.java.db;
 
-import com.plter.lib.java.db.callbacks.DbQueryCallback;
-import com.plter.lib.java.db.callbacks.DbUpdateCallback;
 
 public abstract class Db {
 	

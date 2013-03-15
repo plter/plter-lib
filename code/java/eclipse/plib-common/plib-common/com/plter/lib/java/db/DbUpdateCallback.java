@@ -1,4 +1,4 @@
-package com.plter.lib.java.db.callbacks;
+package com.plter.lib.java.db;
 
 public interface DbUpdateCallback {
 

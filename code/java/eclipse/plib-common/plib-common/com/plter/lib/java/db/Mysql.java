@@ -1,13 +1,10 @@
-package com.plter.lib.java.db.dbs;
+package com.plter.lib.java.db;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-import com.plter.lib.java.db.Db;
-import com.plter.lib.java.db.callbacks.DbQueryCallback;
-import com.plter.lib.java.db.callbacks.DbUpdateCallback;
 
 public class Mysql extends Db {
 	
