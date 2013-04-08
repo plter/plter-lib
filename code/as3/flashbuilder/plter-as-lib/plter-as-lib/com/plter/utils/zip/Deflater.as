@@ -1,6 +1,5 @@
 package  com.plter.utils.zip {
 	
-	import flash.utils.Endian;
 	import flash.utils.ByteArray;
 	
 	/**

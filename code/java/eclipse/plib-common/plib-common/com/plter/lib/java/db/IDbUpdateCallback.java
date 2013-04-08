@@ -1,6 +1,6 @@
 package com.plter.lib.java.db;
 
-public interface DbUpdateCallback {
+public interface IDbUpdateCallback {
 
 	void onAffectedRows(int affectedRowsCount);
 	

@@ -1,6 +1,5 @@
 ﻿package com.plter.utils.zip
 {
-	import flash.events.EventDispatcher;
 	import flash.utils.ByteArray;
 	import flash.utils.Dictionary;
 	import flash.utils.Endian;

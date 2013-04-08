@@ -11,8 +11,8 @@ public abstract class Db {
 	 * @param dbQueryResultHandler
 	 * @return
 	 */
-	public abstract boolean query(String sql,DbQueryCallback dbQueryResultHandler);
-	public abstract boolean update(String sql,DbUpdateCallback dbUpdateCallback);
+	public abstract boolean query(String sql,IDbQueryCallback dbQueryResultHandler);
+	public abstract boolean update(String sql,IDbUpdateCallback dbUpdateCallback);
 	
 	public boolean update(String sql){
 		return update(sql, null);

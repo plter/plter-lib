@@ -37,7 +37,7 @@ public class Mysql extends Db {
 
 
 	@Override
-	public boolean query(String sql,DbQueryCallback dbQueryResultHandler) {
+	public boolean query(String sql,IDbQueryCallback dbQueryResultHandler) {
 		try {
 			connection=openConnection();
 			Statement st = connection.createStatement();
@@ -55,7 +55,7 @@ public class Mysql extends Db {
 
 
 	@Override
-	public boolean update(String sql,DbUpdateCallback dbUpdateCallback) {
+	public boolean update(String sql,IDbUpdateCallback dbUpdateCallback) {
 		try {
 			connection = openConnection();
 			Statement st = connection.createStatement();
