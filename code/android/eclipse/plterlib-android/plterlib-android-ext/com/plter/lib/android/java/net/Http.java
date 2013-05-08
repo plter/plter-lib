@@ -186,8 +186,14 @@ public class Http {
 		}
 		
 		
+		private static HttpClient hc = null;
+		
 		private byte[] getWebContent(){
-			HttpClient hc = new DefaultHttpClient();
+			
+			if (hc==null) {
+				hc = new DefaultHttpClient();
+			}
+			
 			HttpPost hp = new HttpPost(url);
 			try {
 				if (postPairs!=null) {

@@ -16,7 +16,7 @@ public class ViewControllerEvent extends Event {
 	 * @param type	事件的类型
 	 */
 	public ViewControllerEvent(String type) {
-		super(type);
+		super.init(type);
 	}
 
 	/**
