@@ -39,10 +39,16 @@ public class Main {
 //					arr.insert("hi", 0);
 					arr.push("hi");
 				}
+				
+				if (i==2) {
+					break_();
+				}
 			}
 		});
 		
 		System.out.println(arr.length());
+		
+		System.out.println(arr.indexOf("Ha"));
 	}
 
 }

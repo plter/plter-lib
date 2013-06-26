@@ -16,9 +16,6 @@
 
 package com.plter.lib.java.lang;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.logging.Logger;
@@ -35,8 +32,8 @@ public class ObjectPool {
 
 	private static final Logger log = LogFactory.getLogger();
 
-	private static final Map<Class<?>, List<PObject>> classMap=new ConcurrentHashMap<Class<?>,List<PObject>>();
-	private static List<PObject> tmpArr=null;
+	private static final Map<Class<?>, Array<PObject>> classMap=new ConcurrentHashMap<Class<?>,Array<PObject>>();
+	private static Array<PObject> tmpArr=null;
 
 
 	/**
@@ -49,7 +46,7 @@ public class ObjectPool {
 		try {
 			tmpArr=classMap.get(clazz);
 			if (tmpArr!=null) {
-				if (tmpArr.size()>0) {
+				if (tmpArr.length()>0) {
 					return (T)tmpArr.remove(0);
 				}
 			}
@@ -72,7 +69,7 @@ public class ObjectPool {
 	 * @return
 	 */
 	public static final boolean contains(PObject object){
-		List<PObject> objs = classMap.get(object.getClass());
+		Array<PObject> objs = classMap.get(object.getClass());
 		if (objs!=null) {
 			return objs.contains(object);
 		}
@@ -89,11 +86,11 @@ public class ObjectPool {
 
 		if (tmpArr!=null) {
 			if (!tmpArr.contains(obj)) {
-				tmpArr.add(obj);
+				tmpArr.push(obj);
 			}
 		}else{
-			tmpArr=Collections.synchronizedList(new ArrayList<PObject>());
-			tmpArr.add(obj);
+			tmpArr=new Array<PObject>();
+			tmpArr.push(obj);
 			classMap.put(obj.getClass(), tmpArr);
 		}
 	}

@@ -18,26 +18,57 @@ public class Array<T> {
 	 * 遍历数组的每一个元素
 	 * @param loopCallback
 	 */
-	public void each(ArrayLoopCallback<T> loopCallback){
+	public final void each(ArrayLoopCallback<T> loopCallback){
 		Item<T> tmp = _begin;
 		
 		while(tmp.nextItem!=_end){
 			tmp = tmp.nextItem;
 			loopCallback.onRead(tmp.value);
+			
+			if (loopCallback.isBreaked()) {
+				break;
+			}
 		}
 	}
 
-	public T get(int index){
+	/**
+	 * 根据索引获取一项
+	 * @param index
+	 * @return
+	 */
+	public final T get(int index){
 		Item<T> i = getItem(index);
 		return i!=null?i.value:null;
 	}
-
-	public T current(){
-		return get(_currentIndex);
+	
+	/**
+	 * 判断数组中是否包含某项
+	 * @param obj
+	 * @return
+	 */
+	public final boolean contains(T obj){
+		return indexOf(obj)>-1;
 	}
+	
 
-	public int currentIndex(){
-		return _currentIndex;
+	/**
+	 * 获取某项所在的索引
+	 * @param obj
+	 * @return
+	 */
+	public final int indexOf(T obj){
+		
+		Item<T> tmp = _begin;
+		
+		for (int i = 0; i < length(); i++) {
+			tmp = tmp.nextItem;
+			
+			if (tmp.value==obj) {
+				return i;
+			}
+		}
+		
+		return -1;
 	}
 	
 	/**
@@ -45,7 +76,7 @@ public class Array<T> {
 	 * @param obj
 	 * @return
 	 */
-	public T push(T obj){
+	public final T push(T obj){
 		addItemBefore(new Item<T>(obj), _end);
 		return obj;
 	}
@@ -56,7 +87,7 @@ public class Array<T> {
 	 * @param index
 	 * @return
 	 */
-	public T insert(T obj,int index){
+	public final T insert(T obj,int index){
 		Item<T> tmp = getItem(index);
 		if (tmp!=null) {
 			Item<T> itemToAdd = new Item<T>(obj);
@@ -71,7 +102,7 @@ public class Array<T> {
 	 * 删除最后一项
 	 * @return
 	 */
-	public T pop(){
+	public final T pop(){
 		Item<T> tmp = _end.preItem;
 		removeItem(tmp);
 		return tmp.value;
@@ -82,7 +113,7 @@ public class Array<T> {
 	 * 删除第一项
 	 * @return
 	 */
-	public T shift(){
+	public final T shift(){
 		Item<T> tmp = _begin.nextItem;
 		removeItem(tmp);
 		return tmp.value;
@@ -93,7 +124,7 @@ public class Array<T> {
 	 * @param obj
 	 * @return
 	 */
-	public T remove(T obj){
+	public final T remove(T obj){
 		
 		Item<T> tmp = _begin;
 		
@@ -113,7 +144,7 @@ public class Array<T> {
 	 * @param index
 	 * @return
 	 */
-	public T remove(int index){
+	public final T remove(int index){
 		Item<T> i = getItem(index);
 		if (i!=null) {
 			removeItem(i);
@@ -122,13 +153,13 @@ public class Array<T> {
 		return null;
 	}
 
-	public void clear(){
+	public final void clear(){
 		_begin.nextItem = _end;
 		_end.preItem = _begin;
 		_length = 0;
 	}
 
-	public int length(){
+	public final int length(){
 		return _length;
 	}
 	
@@ -169,13 +200,12 @@ public class Array<T> {
 		return tmp;
 	}
 
-	private int _currentIndex = 0;
 	private int _length = 0;
 	private final Item<T> _begin = new Item<T>(null);
 	private final Item<T> _end = new Item<T>(null);
 
 	
-	private static class Item<ValueType>{
+	private final static class Item<ValueType>{
 		
 		public Item(ValueType value) {
 			this.value = value;

@@ -27,14 +27,15 @@ public class Event extends com.plter.lib.java.lang.PObject{
 	public Event init(String type,Object data) {
 		setType(type);
 		setData(data);
+		reset();
 		return this;
 	}
 	
 	public Event init(String type){
 		setType(type);
+		reset();
 		return this;
 	}
-	
 	
 	public String getType() {
 		return type;
@@ -81,6 +82,7 @@ public class Event extends com.plter.lib.java.lang.PObject{
 	public void recycle() {
 		setType(null);
 		setData(null);
+		reset();
 		super.recycle();
 	}
 

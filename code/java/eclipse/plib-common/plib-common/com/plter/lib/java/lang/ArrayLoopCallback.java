@@ -1,5 +1,17 @@
 package com.plter.lib.java.lang;
 
-public interface ArrayLoopCallback<T> {
-	void onRead(T current);
+public abstract class ArrayLoopCallback<T> {
+	public abstract void onRead(T current);
+	
+	/**
+	 * 跳出循环
+	 */
+	public final void break_(){
+		breaked = true;
+	}
+	
+	public boolean isBreaked() {
+		return breaked;
+	}
+	private boolean breaked = false;
 }

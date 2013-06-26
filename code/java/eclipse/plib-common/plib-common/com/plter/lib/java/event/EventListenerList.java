@@ -21,17 +21,17 @@
 
 package com.plter.lib.java.event;
 
-import java.util.ArrayList;
-import java.util.List;
+import com.plter.lib.java.lang.Array;
+import com.plter.lib.java.lang.ArrayLoopCallback;
 
 public class EventListenerList<E extends Event> {
 
 	public void add(EventListener<E> listener){
-		eList.add(listener);
+		eList.push(listener);
 	}
 	
 	public void add(EventListener<E> listener,int index){
-		eList.add(index, listener);
+		eList.insert(listener, index);
 	}
 	
 	public void remove(EventListener<E> listener){
@@ -42,23 +42,32 @@ public class EventListenerList<E extends Event> {
 		eList.clear();
 	}
 	
-	public boolean dispatch(Object target,E event){
+	
+	private boolean _dispatchSuc = true;
+	public boolean dispatch(final Object target,final E event){
 		
-		boolean suc = true;
+		_dispatchSuc = true;
 		
-		for (int i = 0; i < eList.size(); i++) {
-			if (!eList.get(i).onReceive(target, event)) {
-				suc=false;
+		eList.each(new ArrayLoopCallback<EventListener<E>>() {
+
+			@Override
+			public void onRead(EventListener<E> current) {
+				// TODO Auto-generated method stub
+				
+				if (!current.onReceive(target, event)) {
+					_dispatchSuc=false;
+				}
+				
+				if (event.isStoped()) {
+					event.reset();
+					
+					break_();
+				}
 			}
-			
-			if (event.isStoped()) {
-				event.reset();
-				break;
-			}
-		}
+		});
 		
 		event.recycle();
-		return suc;
+		return _dispatchSuc;
 	}
 	
 	
@@ -66,6 +75,6 @@ public class EventListenerList<E extends Event> {
 		return dispatch(null,event );
 	}
 	
-	private final List<EventListener<E>> eList = new ArrayList<EventListener<E>>();
+	private final Array<EventListener<E>> eList = new Array<EventListener<E>>();
 	
 }
