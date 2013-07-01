@@ -22,7 +22,7 @@
 package com.plter.lib.java.event;
 
 import com.plter.lib.java.lang.Array;
-import com.plter.lib.java.lang.ArrayLoopCallback;
+import com.plter.lib.java.lang.ArrayIterator;
 
 public class EventListenerList<E extends Event> {
 
@@ -48,23 +48,17 @@ public class EventListenerList<E extends Event> {
 		
 		_dispatchSuc = true;
 		
-		eList.each(new ArrayLoopCallback<EventListener<E>>() {
-
-			@Override
-			public void onRead(EventListener<E> current) {
-				// TODO Auto-generated method stub
-				
-				if (!current.onReceive(target, event)) {
-					_dispatchSuc=false;
-				}
-				
-				if (event.isStoped()) {
-					event.reset();
-					
-					break_();
-				}
+		
+		for(ArrayIterator<EventListener<E>> current = eList.begin();current.nextItem!=eList.end();current = current.nextItem){
+			if (!current.value.onReceive(target, event)) {
+				_dispatchSuc=false;
 			}
-		});
+			
+			if (event.isStoped()) {
+				event.reset();
+				break;
+			}
+		}
 		
 		event.recycle();
 		return _dispatchSuc;

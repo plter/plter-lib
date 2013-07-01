@@ -1,5 +1,5 @@
 import com.plter.lib.java.lang.Array;
-import com.plter.lib.java.lang.ArrayLoopCallback;
+import com.plter.lib.java.lang.ArrayIterator;
 
 
 public class Main {
@@ -26,25 +26,20 @@ public class Main {
 //			}
 //		}
 		
-		
-		arr.each(new ArrayLoopCallback<String>() {
-			int i = 0;
+		int i=0;
+		for(ArrayIterator<String> it = arr.begin();it.nextItem!=arr.end();it=it.nextItem){
 			
-			@Override
-			public void onRead(String current) {
-				System.out.println(current);
-				
-				i++;
-				if (i==1) {
+			i++;
+			if (i==1) {
 //					arr.insert("hi", 0);
-					arr.push("hi");
-				}
-				
-				if (i==2) {
-					break_();
-				}
+				arr.push("hi");
 			}
-		});
+			
+			if (i==2) {
+				break;
+			}
+			
+		}
 		
 		System.out.println(arr.length());
 		
