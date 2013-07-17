@@ -5,8 +5,8 @@ import com.plter.lib.java.lang.ICallback;
 public abstract class HttpBytesCompleteHandler implements ICallback<Object> {
 
 	
-	public boolean execute(Object... args) {
-		onResult((byte[]) args[0]);
+	public boolean execute(Object arg) {
+		onResult((byte[]) arg);
 		return false;
 	}
 	

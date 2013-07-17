@@ -13,5 +13,10 @@ public abstract class ArrayLoopCallback<T> {
 	public boolean isBreaked() {
 		return breaked;
 	}
+	
+	void setBreaked(boolean breaked){
+		this.breaked = breaked;
+	}
+	
 	private boolean breaked = false;
 }

@@ -18,6 +18,7 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
 
 import android.os.AsyncTask;
+import android.os.Environment;
 import android.util.Log;
 
 import com.plter.lib.java.lang.ICallback;
@@ -113,7 +114,7 @@ public class Http {
 	private static String charSet="utf-8";
 	
 	
-	public static final String HTTP_CACHED_DATA_DIR="/mnt/sdcard/.plter/httpcache/";
+	public static final String HTTP_CACHED_DATA_DIR= Environment.getExternalStorageDirectory().getAbsolutePath() + "/.plter/httpcache/";
 	
 	/**
 	 * 取得Http数据缓存目录
@@ -137,7 +138,7 @@ public class Http {
 	private static class HttpLoaderTask extends AsyncTask<Void, Integer, Object>{
 
 		
-		public HttpLoaderTask(String url,NameValuePairs postPairs,HttpBytesCompleteHandler completeListener,IHttpFaultCallback faultListener,boolean useCache) {
+		public HttpLoaderTask(String url,NameValuePairs postPairs,HttpBytesCompleteHandler completeListener,IHttpFaultCallback faultListener,boolean useCache) {			
 			this.url=url.replaceAll(" ", "%20");
 			this.postPairs=postPairs;
 			this.completeCallback=completeListener;
@@ -149,7 +150,14 @@ public class Http {
 		
 		protected Object doInBackground(Void... params) {
 			if (useCache) {
-				File cachedFile = new File(getHttpCachedDataDir()+"/"+URLEncoder.encode(url));
+				File cachedFile=null;
+				try {
+					cachedFile = new File(getHttpCachedDataDir()+"/"+URLEncoder.encode(url, charSet));
+				} catch (UnsupportedEncodingException e1) {
+					e1.printStackTrace();
+					return null;
+				}
+				
 				if (cachedFile.exists()) {
 					try {
 						FileInputStream fis = new FileInputStream(cachedFile);

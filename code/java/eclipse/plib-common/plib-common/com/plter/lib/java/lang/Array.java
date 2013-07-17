@@ -16,11 +16,16 @@ public class Array<T> {
 	
 	public final void each(ArrayLoopCallback<T> callback){
 		
-		for (ArrayIterator<T> it = begin(); it.nextItem!=end(); it=it.nextItem) {
-			callback.onRead(it.value);
+		ArrayIterator<T> it = begin().nextItem();
+		callback.setBreaked(false);
+		
+		while(it!=end()){
+			callback.onRead(it.value());
 			if (callback.isBreaked()) {
 				break;
 			}
+			
+			it = it.nextItem();
 		}
 	}
 	
@@ -32,7 +37,7 @@ public class Array<T> {
 	 */
 	public final T get(int index){
 		ArrayIterator<T> i = getItem(index);
-		return i!=null?i.value:null;
+		return i!=null?i.value():null;
 	}
 	
 	/**
@@ -55,9 +60,9 @@ public class Array<T> {
 		ArrayIterator<T> tmp = _begin;
 		
 		for (int i = 0; i < length(); i++) {
-			tmp = tmp.nextItem;
+			tmp = tmp.nextItem();
 			
-			if (tmp.value==obj) {
+			if (tmp.value()==obj) {
 				return i;
 			}
 		}
@@ -97,9 +102,9 @@ public class Array<T> {
 	 * @return
 	 */
 	public final T pop(){
-		ArrayIterator<T> tmp = _end.preItem;
+		ArrayIterator<T> tmp = _end.preItem();
 		removeItem(tmp);
-		return tmp.value;
+		return tmp.value();
 	}
 	
 	
@@ -108,9 +113,9 @@ public class Array<T> {
 	 * @return
 	 */
 	public final T shift(){
-		ArrayIterator<T> tmp = _begin.nextItem;
+		ArrayIterator<T> tmp = _begin.nextItem();
 		removeItem(tmp);
-		return tmp.value;
+		return tmp.value();
 	}
 
 	/**
@@ -122,9 +127,9 @@ public class Array<T> {
 		
 		ArrayIterator<T> tmp = _begin;
 		
-		while(tmp.nextItem!=null){
-			tmp = tmp.nextItem;
-			if (tmp.value==obj) {
+		while(tmp.nextItem()!=null){
+			tmp = tmp.nextItem();
+			if (tmp.value()==obj) {
 				removeItem(tmp);
 				return obj;
 			}
@@ -142,14 +147,14 @@ public class Array<T> {
 		ArrayIterator<T> i = getItem(index);
 		if (i!=null) {
 			removeItem(i);
-			return i.value;
+			return i.value();
 		}
 		return null;
 	}
 
 	public final void clear(){
-		_begin.nextItem = _end;
-		_end.preItem = _begin;
+		_begin.setNextItem(_end);
+		_end.setPreItem(_begin);
 		_length = 0;
 	}
 
@@ -166,16 +171,16 @@ public class Array<T> {
 	}
 	
 	private void removeItem(ArrayIterator<T> item){
-		item.nextItem.preItem = item.preItem;
-		item.preItem.nextItem = item.nextItem;
+		item.nextItem().setPreItem(item.preItem());
+		item.preItem().setNextItem(item.nextItem());
 		_length--;
 	}
 
 	private void addItemBefore(ArrayIterator<T> itemToAdd,ArrayIterator<T> item){
-		itemToAdd.nextItem = item;
-		itemToAdd.preItem = item.preItem;
-		itemToAdd.preItem.nextItem = itemToAdd;
-		itemToAdd.nextItem.preItem = itemToAdd;
+		itemToAdd.setNextItem(item);
+		itemToAdd.setPreItem(item.preItem());
+		itemToAdd.preItem().setNextItem(itemToAdd);
+		itemToAdd.nextItem().setPreItem(itemToAdd);
 		_length++;
 	}
 	
@@ -190,12 +195,12 @@ public class Array<T> {
 		if (index<length()/2) {
 			tmp = _begin;
 			for (int i = 0; i <= index; i++) {
-				tmp = tmp.nextItem;
+				tmp = tmp.nextItem();
 			}
 		}else{
 			tmp = _end;
 			for (int i = length(); i > index; i--) {
-				tmp = tmp.preItem;
+				tmp = tmp.preItem();
 			}
 		}
 		

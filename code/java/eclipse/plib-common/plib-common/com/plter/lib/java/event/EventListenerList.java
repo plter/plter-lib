@@ -14,9 +14,8 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 
-   This is a part of PlterAndroidLib on 
-   http://plter.sinaapp.com/?cat=14 
-	https://github.com/xtiqin/plter-android-lib
+   This is a part of plter-lib on 
+	https://github.com/plter/plter-lib
  */
 
 package com.plter.lib.java.event;
@@ -48,9 +47,10 @@ public class EventListenerList<E extends Event> {
 		
 		_dispatchSuc = true;
 		
-		
-		for(ArrayIterator<EventListener<E>> current = eList.begin();current.nextItem!=eList.end();current = current.nextItem){
-			if (!current.value.onReceive(target, event)) {
+		ArrayIterator<EventListener<E>> current = eList.begin().nextItem();
+		while(current!=eList.end()){
+			
+			if (!current.value().onReceive(target, event)) {
 				_dispatchSuc=false;
 			}
 			
@@ -58,6 +58,8 @@ public class EventListenerList<E extends Event> {
 				event.reset();
 				break;
 			}
+			
+			current = current.nextItem();
 		}
 		
 		event.recycle();
