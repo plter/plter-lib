@@ -19,13 +19,28 @@ public class Array<T> {
 		ArrayIterator<T> it = begin().nextItem();
 		callback.setBreaked(false);
 		
-		while(it!=end()){
+		while(it!=end()&&it!=null){
 			callback.onRead(it.value());
 			if (callback.isBreaked()) {
 				break;
 			}
 			
 			it = it.nextItem();
+		}
+	}
+	
+	public final void reverseEach(ArrayLoopCallback<T> callback){
+		
+		ArrayIterator<T> it = end().preItem();
+		callback.setBreaked(false);
+		
+		while(it!=begin()&&it!=null){
+			callback.onRead(it.value());
+			if (callback.isBreaked()) {
+				break;
+			}
+			
+			it = it.preItem();
 		}
 	}
 	
