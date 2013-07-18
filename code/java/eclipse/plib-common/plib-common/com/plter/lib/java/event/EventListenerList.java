@@ -21,7 +21,7 @@
 package com.plter.lib.java.event;
 
 import com.plter.lib.java.lang.Array;
-import com.plter.lib.java.lang.ArrayIterator;
+import com.plter.lib.java.lang.ArrayLoopCallback;
 
 public class EventListenerList<E extends Event> {
 
@@ -47,20 +47,20 @@ public class EventListenerList<E extends Event> {
 		
 		_dispatchSuc = true;
 		
-		ArrayIterator<EventListener<E>> current = eList.begin().nextItem();
-		while(current!=eList.end()){
-			
-			if (!current.value().onReceive(target, event)) {
-				_dispatchSuc=false;
+		eList.each(new ArrayLoopCallback<EventListener<E>>() {
+
+			@Override
+			public void onRead(EventListener<E> current) {
+				if (!current.onReceive(target, event)) {
+					_dispatchSuc=false;
+				}
+				
+				if (event.isStoped()) {
+					event.reset();
+					break_();
+				}
 			}
-			
-			if (event.isStoped()) {
-				event.reset();
-				break;
-			}
-			
-			current = current.nextItem();
-		}
+		});
 		
 		event.recycle();
 		return _dispatchSuc;
