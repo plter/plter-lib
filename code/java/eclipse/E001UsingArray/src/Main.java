@@ -1,5 +1,5 @@
 import com.plter.lib.java.lang.Array;
-import com.plter.lib.java.lang.ArrayIterator;
+import com.plter.lib.java.lang.ArrayItem;
 
 
 public class Main {
@@ -27,7 +27,7 @@ public class Main {
 //		}
 		
 		int i=0;
-		for(ArrayIterator<String> it = arr.begin();it.nextItem!=arr.end();it=it.nextItem){
+		for(ArrayItem<String> it = arr.begin();it.nextItem()!=arr.end();it=it.nextItem()){
 			
 			i++;
 			if (i==1) {

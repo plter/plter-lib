@@ -1,5 +1,6 @@
 package com.plter.lib.java.lang;
 
+
 /**
  * 该数组使用链表实现，高效、安全
  * @author plter
@@ -16,7 +17,7 @@ public class Array<T> {
 	
 	public final void each(ArrayLoopCallback<T> callback){
 		
-		ArrayIterator<T> it = begin().nextItem();
+		ArrayItem<T> it = begin().nextItem();
 		callback.setBreaked(false);
 		
 		while(it!=end()&&it!=null){
@@ -31,7 +32,7 @@ public class Array<T> {
 	
 	public final void reverseEach(ArrayLoopCallback<T> callback){
 		
-		ArrayIterator<T> it = end().preItem();
+		ArrayItem<T> it = end().preItem();
 		callback.setBreaked(false);
 		
 		while(it!=begin()&&it!=null){
@@ -51,7 +52,7 @@ public class Array<T> {
 	 * @return
 	 */
 	public final T get(int index){
-		ArrayIterator<T> i = getItem(index);
+		ArrayItem<T> i = getItem(index);
 		return i!=null?i.value():null;
 	}
 	
@@ -72,7 +73,7 @@ public class Array<T> {
 	 */
 	public final int indexOf(T obj){
 		
-		ArrayIterator<T> tmp = _begin;
+		ArrayItem<T> tmp = _begin;
 		
 		for (int i = 0; i < length(); i++) {
 			tmp = tmp.nextItem();
@@ -90,9 +91,8 @@ public class Array<T> {
 	 * @param obj
 	 * @return
 	 */
-	public final T push(T obj){
-		addItemBefore(new ArrayIterator<T>(obj), _end);
-		return obj;
+	public final ArrayItem<T> push(T obj){
+		return addItemBefore(new ArrayItem<T>(obj), _end);
 	}
 
 	/**
@@ -101,12 +101,10 @@ public class Array<T> {
 	 * @param index
 	 * @return
 	 */
-	public final T insert(T obj,int index){
-		ArrayIterator<T> tmp = getItem(index);
+	public final ArrayItem<T> insert(T obj,int index){
+		ArrayItem<T> tmp = getItem(index);
 		if (tmp!=null) {
-			ArrayIterator<T> itemToAdd = new ArrayIterator<T>(obj);
-			addItemBefore(itemToAdd, tmp);
-			return obj;
+			return addItemBefore(new ArrayItem<T>(obj), tmp);
 		}
 		return null;
 	}
@@ -117,7 +115,7 @@ public class Array<T> {
 	 * @return
 	 */
 	public final T pop(){
-		ArrayIterator<T> tmp = _end.preItem();
+		ArrayItem<T> tmp = _end.preItem();
 		removeItem(tmp);
 		return tmp.value();
 	}
@@ -128,19 +126,19 @@ public class Array<T> {
 	 * @return
 	 */
 	public final T shift(){
-		ArrayIterator<T> tmp = _begin.nextItem();
+		ArrayItem<T> tmp = _begin.nextItem();
 		removeItem(tmp);
 		return tmp.value();
 	}
 
 	/**
-	 * 删除其中一项
+	 * 删除其中一项，建议使用removeItem提高程序运行效率
 	 * @param obj
 	 * @return
 	 */
 	public final T remove(T obj){
 		
-		ArrayIterator<T> tmp = _begin;
+		ArrayItem<T> tmp = _begin;
 		
 		while(tmp.nextItem()!=null){
 			tmp = tmp.nextItem();
@@ -159,7 +157,7 @@ public class Array<T> {
 	 * @return
 	 */
 	public final T remove(int index){
-		ArrayIterator<T> i = getItem(index);
+		ArrayItem<T> i = getItem(index);
 		if (i!=null) {
 			removeItem(i);
 			return i.value();
@@ -177,35 +175,38 @@ public class Array<T> {
 		return _length;
 	}
 	
-	public final ArrayIterator<T> begin(){
+	public final ArrayItem<T> begin(){
 		return _begin;
 	}
 	
-	public final ArrayIterator<T> end(){
+	public final ArrayItem<T> end(){
 		return _end;
 	}
 	
-	private void removeItem(ArrayIterator<T> item){
+	public ArrayItem<T> removeItem(ArrayItem<T> item){
 		item.nextItem().setPreItem(item.preItem());
 		item.preItem().setNextItem(item.nextItem());
 		_length--;
+		
+		return item;
 	}
 
-	private void addItemBefore(ArrayIterator<T> itemToAdd,ArrayIterator<T> item){
+	public ArrayItem<T> addItemBefore(ArrayItem<T> itemToAdd,ArrayItem<T> item){
 		itemToAdd.setNextItem(item);
 		itemToAdd.setPreItem(item.preItem());
 		itemToAdd.preItem().setNextItem(itemToAdd);
 		itemToAdd.nextItem().setPreItem(itemToAdd);
 		_length++;
+		return itemToAdd;
 	}
 	
-	private ArrayIterator<T> getItem(int index){
+	public ArrayItem<T> getItem(int index){
 		
 		if (index>=length()||index<0) {
 			return null;
 		}
 		
-		ArrayIterator<T> tmp = null;
+		ArrayItem<T> tmp = null;
 		
 		if (index<length()/2) {
 			tmp = _begin;
@@ -223,6 +224,6 @@ public class Array<T> {
 	}
 
 	private int _length = 0;
-	private final ArrayIterator<T> _begin = new ArrayIterator<T>(null);
-	private final ArrayIterator<T> _end = new ArrayIterator<T>(null);
+	private final ArrayItem<T> _begin = new ArrayItem<T>(null);
+	private final ArrayItem<T> _end = new ArrayItem<T>(null);
 }
