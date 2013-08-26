@@ -10,10 +10,13 @@ namespace plter {
 
 Event::Event(string type):Object(){
 	setType(type);
-	setData(NULL);
+    
+    _data = NULL;
 }
 
 Event::Event(string type,Object* data):Object(){
+    _data = NULL;
+    
 	setType(type);
 	setData(data);
 }
@@ -31,6 +34,10 @@ Object* Event::getData(){
 }
 
 void Event::setData(Object* data) {
+    if (_data!=NULL) {
+        _data->release();
+    }
+    
 	_data = data;
 	if (_data!=NULL) {
 		_data->retain();
