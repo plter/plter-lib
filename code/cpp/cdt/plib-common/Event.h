@@ -1,7 +1,6 @@
 /*
  * Event.h
  *
- *  Created on: 2013年8月25日
  *      Author: plter
  */
 
@@ -9,25 +8,27 @@
 #define EVENT_H_
 
 #include <string>
+#include "Object.h"
 
 using namespace std;
 
 
 namespace plter {
 
-class Event {
+class Event :public Object{
 public:
-	Event();
 	Event(string type);
-	Event(string type,void* data);
-	Event(void* data);
+	Event(string type,Object* data);
+	Event(Object* data);
 	virtual string getType();
-	virtual void* getData();
+	virtual Object* getData();
 	virtual ~Event();
 
 private:
 	string _type;
-	void* _data;
+	Object* _data;
+	virtual void setData(Object* data);
+	virtual void setType(string type);
 };
 
 } /* namespace plter */

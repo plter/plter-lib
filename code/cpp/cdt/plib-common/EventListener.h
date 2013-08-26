@@ -1,7 +1,6 @@
 /*
  * EventListener.h
  *
- *  Created on: 2013年8月25日
  *      Author: plter
  */
 
@@ -9,14 +8,24 @@
 #define EVENTLISTENER_H_
 
 #include "Event.h"
+#include <string>
+#include "Object.h"
+
+using namespace std;
+
 
 namespace plter {
 
-class EventListener {
+class EventListener :public Object{
 public:
 	EventListener();
-	virtual bool execute(Event* e,void* target)=0;
+	EventListener(string name);
+	virtual string getName();
+	virtual bool execute(Event* e,Object* target);
 	virtual ~EventListener();
+
+private:
+	string _name;
 };
 
 } /* namespace plter */

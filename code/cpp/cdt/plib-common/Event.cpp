@@ -1,7 +1,6 @@
 /*
  * Event.cpp
  *
- *  Created on: 2013年8月25日
  *      Author: plter
  */
 
@@ -9,34 +8,43 @@
 
 namespace plter {
 
-Event::Event() {
-	_data = NULL;
+Event::Event(string type):Object(){
+	setType(type);
+	setData(NULL);
 }
 
-Event::Event(string type){
-	_data = NULL;
-	_type = type;
+Event::Event(string type,Object* data):Object(){
+	setType(type);
+	setData(data);
 }
 
-Event::Event(string type,void* data){
-	_data = data;
-	_type = type;
-}
-
-Event::Event(void* data){
-	_data = data;
+Event::Event(Object* data):Object(){
+	setData(data);
 }
 
 string Event::getType(){
 	return _type;
 }
 
-void* Event::getData(){
+Object* Event::getData(){
 	return _data;
 }
 
+void Event::setData(Object* data) {
+	_data = data;
+	if (_data!=NULL) {
+		_data->retain();
+	}
+}
 
 Event::~Event() {
+	if (_data!=NULL) {
+		_data->release();
+	}
+}
+
+void Event::setType(string type) {
+	_type = type;
 }
 
 } /* namespace plter */

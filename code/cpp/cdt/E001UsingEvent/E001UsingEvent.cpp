@@ -8,38 +8,28 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include <iostream>
-#include <Event.h>
-#include <EventListenerList.h>
 #include <EventListener.h>
+#include <Event.h>
+#include <Object.h>
+#include <EventListenerList.h>
 
 using namespace plter;
-using namespace std;
 
-
-class Listener:public EventListener{
+class Listener:public EventListener {
 public:
-	virtual bool execute(Event* e,void* target){
-		cout<<"Handle Event[Event type:"<<e->getType()<<"]"<<endl;
+	virtual bool execute(Event* e,Object* data){
+		puts("Listener execute");
 		return true;
 	};
-};
 
+private:
+};
 
 int main(void) {
 
 	EventListenerList* el = new EventListenerList();
-
 	Listener* l = new Listener();
-	Event* e = new Event("Hello");
 	el->addListener(l);
-	el->dispatch(e);
-	el->removeListener(l);
-	el->dispatch(e);
-
-	delete l;
-	delete el;
-	delete e;
-
+	el->dispatch(NULL);
 	return EXIT_SUCCESS;
 }
