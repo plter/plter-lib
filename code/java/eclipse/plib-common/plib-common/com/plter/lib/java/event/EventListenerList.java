@@ -28,49 +28,54 @@ public class EventListenerList<E extends Event> {
 	public void add(EventListener<E> listener){
 		eList.push(listener);
 	}
-	
+
 	public void add(EventListener<E> listener,int index){
 		eList.insert(listener, index);
 	}
-	
+
 	public void remove(EventListener<E> listener){
 		eList.remove(listener);
 	}
-	
+
 	public void remove(){
 		eList.clear();
 	}
-	
-	
+
+
 	private boolean _dispatchSuc = true;
-	public boolean dispatch(final Object target,final E event){
-		
+	public boolean dispatch(final E event,final Object target){
+
 		_dispatchSuc = true;
-		
+
 		eList.each(new ArrayLoopCallback<EventListener<E>>() {
 
 			@Override
 			public void onRead(EventListener<E> current) {
-				if (!current.onReceive(target, event)) {
-					_dispatchSuc=false;
-				}
-				
-				if (event.isStoped()) {
-					event.reset();
-					break_();
+				if (current.getName()==null||
+						event.getName()==null||
+						event.getName().equals(current.getName())) {
+
+					if (!current.onReceive(target, event)) {
+						_dispatchSuc=false;
+					}
+
+					if (event.isStoped()) {
+						event.reset();
+						break_();
+					}
 				}
 			}
 		});
-		
+
 		event.recycle();
 		return _dispatchSuc;
 	}
-	
-	
+
+
 	public boolean dispatch(E event){
-		return dispatch(null,event );
+		return dispatch(event ,null);
 	}
-	
+
 	private final Array<EventListener<E>> eList = new Array<EventListener<E>>();
-	
+
 }

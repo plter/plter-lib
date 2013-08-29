@@ -21,6 +21,17 @@
 
 package com.plter.lib.java.event;
 
-public interface EventListener<E extends Event> {
-	boolean onReceive(Object target,E event);
+public abstract class EventListener<E extends Event> {
+	public EventListener(String name) {
+		this.name=name;
+	}
+	
+	public String getName() {
+		return name;
+	}
+	
+	public abstract boolean onReceive(Object target,E event);
+	
+	
+	private String name = null;
 }

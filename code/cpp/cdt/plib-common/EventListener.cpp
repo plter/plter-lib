@@ -9,6 +9,7 @@
 namespace plter {
 
 EventListener::EventListener():Object() {
+	_name = "";
 }
 
 EventListener::EventListener(string name):Object(){

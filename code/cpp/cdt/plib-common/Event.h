@@ -17,18 +17,19 @@ namespace plter {
 
 class Event :public Object{
 public:
+	Event();
 	Event(string type);
 	Event(string type,Object* data);
 	Event(Object* data);
-	virtual string getType();
+	virtual string getName();
 	virtual Object* getData();
 	virtual ~Event();
 
 private:
-	string _type;
+	string _name;
 	Object* _data;
 	virtual void setData(Object* data);
-	virtual void setType(string type);
+	virtual void setName(string type);
 };
 
 } /* namespace plter */
