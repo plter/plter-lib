@@ -1,7 +1,7 @@
 package com.plter.lib.java.lang;
 
 public abstract class ArrayLoopCallback<T> {
-	public abstract void onRead(T current);
+	public abstract void onRead(T currentValue,ArrayItem<T> currentItem);
 	
 	/**
 	 * 跳出循环

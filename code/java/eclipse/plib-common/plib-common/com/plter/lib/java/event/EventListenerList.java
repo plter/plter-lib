@@ -21,6 +21,7 @@
 package com.plter.lib.java.event;
 
 import com.plter.lib.java.lang.Array;
+import com.plter.lib.java.lang.ArrayItem;
 import com.plter.lib.java.lang.ArrayLoopCallback;
 
 public class EventListenerList<E extends Event> {
@@ -36,6 +37,20 @@ public class EventListenerList<E extends Event> {
 	public void remove(EventListener<E> listener){
 		eList.remove(listener);
 	}
+	
+	public void remove(final String name){
+		eList.each(new ArrayLoopCallback<EventListener<E>>() {
+
+			@Override
+			public void onRead(EventListener<E> currentValue,
+					ArrayItem<EventListener<E>> currentItem) {
+				if (currentValue.getName()!=null&&currentValue.getName().equals(name)) {
+					eList.removeItem(currentItem);
+					break_();
+				}
+			}
+		});
+	}
 
 	public void remove(){
 		eList.clear();
@@ -50,12 +65,13 @@ public class EventListenerList<E extends Event> {
 		eList.each(new ArrayLoopCallback<EventListener<E>>() {
 
 			@Override
-			public void onRead(EventListener<E> current) {
-				if (current.getName()==null||
+			public void onRead(EventListener<E> currentValue,
+					ArrayItem<EventListener<E>> currentItem) {
+				if (currentValue.getName()==null||
 						event.getName()==null||
-						event.getName().equals(current.getName())) {
+						event.getName().equals(currentValue.getName())) {
 
-					if (!current.onReceive(target, event)) {
+					if (!currentValue.onReceive(event, target)) {
 						_dispatchSuc=false;
 					}
 

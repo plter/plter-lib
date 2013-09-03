@@ -30,7 +30,7 @@ public abstract class EventListener<E extends Event> {
 		return name;
 	}
 	
-	public abstract boolean onReceive(Object target,E event);
+	public abstract boolean onReceive(E event,Object target);
 	
 	
 	private String name = null;

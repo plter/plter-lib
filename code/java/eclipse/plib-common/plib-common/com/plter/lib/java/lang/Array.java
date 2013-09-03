@@ -21,7 +21,7 @@ public class Array<T> {
 		callback.setBreaked(false);
 		
 		while(it!=end()&&it!=null){
-			callback.onRead(it.value());
+			callback.onRead(it.value(),it);
 			if (callback.isBreaked()) {
 				break;
 			}
@@ -36,7 +36,7 @@ public class Array<T> {
 		callback.setBreaked(false);
 		
 		while(it!=begin()&&it!=null){
-			callback.onRead(it.value());
+			callback.onRead(it.value(),it);
 			if (callback.isBreaked()) {
 				break;
 			}
