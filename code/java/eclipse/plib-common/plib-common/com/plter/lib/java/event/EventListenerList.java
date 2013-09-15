@@ -82,8 +82,6 @@ public class EventListenerList<E extends Event> {
 				}
 			}
 		});
-
-		event.recycle();
 		return _dispatchSuc;
 	}
 

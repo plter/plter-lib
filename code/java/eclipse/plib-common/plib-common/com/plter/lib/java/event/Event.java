@@ -22,19 +22,16 @@
 package com.plter.lib.java.event;
 
 
-public class Event extends com.plter.lib.java.lang.PObject{
+public class Event{
 
-	public Event init(String name,Object data) {
+	public Event(String name,Object data) {
 		setName(name);
 		setData(data);
 		reset();
-		return this;
 	}
 	
-	public Event init(String name){
+	public Event(String name){
 		setName(name);
-		reset();
-		return this;
 	}
 	
 	public String getName() {
@@ -63,7 +60,7 @@ public class Event extends com.plter.lib.java.lang.PObject{
 	}
 	
 	public Event clone(){
-		return alloc(Event.class).init(getName(), getData());
+		return new Event(getName(), getData());
 	}
 
 
@@ -78,14 +75,6 @@ public class Event extends com.plter.lib.java.lang.PObject{
 		stoped=false;
 	}
 	
-	@Override
-	public void recycle() {
-		setName(null);
-		setData(null);
-		reset();
-		super.recycle();
-	}
-
 	private String name=null;
 	private Object data=null;
 	private boolean stoped=false;
