@@ -27,7 +27,6 @@ public class Event{
 	public Event(String name,Object data) {
 		setName(name);
 		setData(data);
-		reset();
 	}
 	
 	public Event(String name){
@@ -68,12 +67,6 @@ public class Event{
 		return stoped;
 	}
 
-	/**
-	 * 重置事件相关属性
-	 */
-	void reset() {
-		stoped=false;
-	}
 	
 	private String name=null;
 	private Object data=null;

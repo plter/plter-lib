@@ -76,7 +76,6 @@ public class EventListenerList<E extends Event> {
 					}
 
 					if (event.isStoped()) {
-						event.reset();
 						break_();
 					}
 				}
