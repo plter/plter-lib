@@ -17,29 +17,20 @@
 package com.plter.lib.java.utils;
 
 import java.util.logging.ConsoleHandler;
-import java.util.logging.Formatter;
 import java.util.logging.Level;
-import java.util.logging.LogRecord;
 import java.util.logging.Logger;
 
 public abstract class LogFactory {
 
 	
 	public static final String LOG_NAME="com.plter.lib.java.log";
-	private static final long START_TIME=System.currentTimeMillis();
+	
 	private static Logger log = null;
 	public static final Logger getLogger(){
 		if (log==null) {
 			log = Logger.getLogger(LOG_NAME);
 			log.setUseParentHandlers(false);
 			ConsoleHandler ch = new ConsoleHandler();
-			ch.setFormatter(new Formatter() {
-				
-				@Override
-				public String format(LogRecord record) {
-					return String.format("%d[%s]%s[%s.%s]\n", record.getMillis()-START_TIME,record.getLevel(),record.getMessage(),record.getSourceClassName(),record.getSourceMethodName());
-				}
-			});
 			ch.setLevel(Level.ALL);
 			log.setLevel(Level.ALL);
 			log.addHandler(ch);
